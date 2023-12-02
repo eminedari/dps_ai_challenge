@@ -13,6 +13,10 @@ model = joblib.load("model.pkl")
 categories = {'Alkoholunfälle': 0, 'Fluchtunfälle': 1, 'Verkehrsunfälle': 2}
 types = {'Verletzte und Getötete': 0, 'insgesamt': 1, 'mit Personenschäden': 2}
 
+@app.route("/", methods=["GET"])
+def home():
+    return "Welcome to the API!"
+
 @app.route("/", methods=["POST"])
 def predict():
     try:
