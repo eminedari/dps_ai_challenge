@@ -19,7 +19,7 @@ Example response:
     "prediction": 21
 }
 ```
--**With month and year feature only:** returns the prediction for total number of accidents predicted to happen on that month and year.
+- **With month and year feature only:** returns the prediction for total number of accidents predicted to happen on that month and year.
 Example request:
 ```json
 {
