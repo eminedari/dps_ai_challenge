@@ -9,16 +9,11 @@ app = Flask(__name__)
 model = joblib.load("model.pkl")
 
 ##### To use in case where only 2 features are given #####
-# Create a list for all the types
-types = np.arange(0, 3)
-# Create a list for all the categories of accidents
-categories = np.arange(0, 3)
+# Create a dict for all the types and categories of accidents
+categories = {'Alkoholunfälle': 0, 'Fluchtunfälle': 1, 'Verkehrsunfälle': 2}
+types = {'Verletzte und Getötete': 0, 'insgesamt': 1, 'mit Personenschäden': 2}
 
-@app.route("/")
-def home():
-    return "Welcome to the accident prediction API!"
-
-@app.route("/predict", methods=["POST"])
+@app.route("/", methods=["POST"])
 def predict():
     try:
         # Get input data from the request
@@ -34,14 +29,14 @@ def predict():
             prediction = 0
             for category in categories:
                 for _type in types:
-                    prediction +=int(np.round( model.predict(np.array([[category, _type, year, month]]))[0]))
+                    prediction +=int(np.round( model.predict(np.array([[categories[category], types[_type], int(year), int(month)]]))[0]))
             
         elif len(data) == 4:
             #gather additional features
             category = data["category"]
-            _type = data["_type"]
+            _type = data["type"]
             # Make a prediction
-            prediction = int(np.round(model.predict(np.array([[category,_type,year,month]]))[0]))
+            prediction = int(np.round(model.predict(np.array([[categories[category], types[_type],year,month]]))[0]))
         
         # Return the result in the specified format
         return jsonify({"prediction": prediction})
