@@ -33,7 +33,7 @@ def predict():
             prediction = 0
             for category in categories:
                 for _type in types:
-                    prediction +=int(np.round( model.predict(np.array([[categories[category], types[_type], int(year), int(month)]]))[0]))
+                    prediction += int(np.round( model.predict(np.array([[categories[category], types[_type], int(year), int(month)]]))[0]))
             
         elif len(data) == 4:
             #gather additional features
